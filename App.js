@@ -1,17 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <View>
     
+    <View style={styles.container}>
+      <Image source={require('/home/alunoifal/Documentos/GitHub/vitacure/assets/logovitacure-Photoroom.png')} 
+      style={{width:100, height: 100}} >
+        
+      </Image>
+      <View>
+    <View>
           <Text>Login:</Text>
           <Text>Senha:</Text>
           <StatusBar style="auto" />
 
     <Button title="Acessar" />
-    
+    </View>
       </View>
     </View>
   );
@@ -19,7 +24,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: 'blue',
     alignItems: 'center',
     justifyContent: 'center',
   },
