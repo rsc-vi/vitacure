@@ -9,15 +9,17 @@ export default function App() {
       style={{width:100, height: 100}} >
         
       </Image>
+      
       <View>
-    <View>
+        <View style={styles.login}>
+          
           <Text>Login:</Text>
           <Text>Senha:</Text>
           <StatusBar style="auto" />
 
-    <Button title="Acessar" />
-    </View>
+             <Button title="Acessar" />
       </View>
+        </View>
     </View>
   );
 }
@@ -28,4 +30,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  login: {
+    borderWidth: 1,
+    padding: 110,
+    backgroundColor: 'white'
+  }
 });
