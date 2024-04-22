@@ -1,6 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, Image, TextInput } from 'react-native';
+import { Link } from 'expo-router';
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -70,7 +73,12 @@ export default function App() {
           onChangeText={setPassword}
           secureTextEntry={true}
         />
+        
+        <View>
+      <Link href="/home" asChild>
         <Button title="Acessar" onPress={handleLogin} />
+        </Link>
+    </View>
       </View>
       <StatusBar style="auto" />
     </View>
