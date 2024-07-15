@@ -4,7 +4,7 @@ import { Link } from 'expo-router';
 export default function Page() {
   return (
     <View>
-      <Link href="/">VOLTAR OTARA</Link>
+      <Link href="/">VOLTAR OTARO</Link>
     </View>
   );
 }
