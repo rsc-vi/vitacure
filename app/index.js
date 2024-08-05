@@ -1,11 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Pressable, Image, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Image, TextInput, Button } from 'react-native';
 import { Link } from '@react-navigation/native'; // Importe o Link correto para navegação
 
 import { useFonts, Inder_400Regular } from '@expo-google-fonts/inder';
+import { auth } from './../firebaseConfig';
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function App() {
+
+  const handleLoginFirebase = () =>{
+    signInWithEmailAndPassword(auth, "dso7@aluno.ifal.edu.br", "ACAB1312" )
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user);
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode);
+    console.log(errorMessage);
+  });
+  }
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -45,15 +63,17 @@ export default function App() {
           secureTextEntry={true}
         />
 
+      <Button title="Acessar Firebase" onPress={handleLoginFirebase} />
+
         {/* <View> */}
           {/* 
             <Button title="Acessar" onPress={handleLogin} />
           </Link> */}
-          <Link href="/home" asChild>Acessar
+          {/* <Link href="/home" asChild>Acessar          </Link> */}
             {/* <Pressable>
               <Text>Acessar</Text>
             </Pressable> */}
-          </Link>
+
 
                                  {/* </View> */}
       </View>
