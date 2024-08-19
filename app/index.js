@@ -12,23 +12,21 @@ export default function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  
-  const handleLoginFirebase = () =>{
-    signInWithEmailAndPassword(auth, username, password )
-  .then((userCredential) => {
+
+  const handleLoginFirebase = async () =>{
+    try{
+    const userCredential = await signInWithEmailAndPassword(auth, username, password )
     // Signed in 
     const user = userCredential.user;
     console.log(user);
     router.replace('/home');
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode);
+      console.error(errorMessage)
+    }
 
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode);
-    console.log(errorMessage);
-  });
   }
  
   let [fontsLoaded] = useFonts({
