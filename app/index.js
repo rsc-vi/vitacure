@@ -2,19 +2,25 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Pressable, Image, TextInput, Button } from 'react-native';
 import { Link } from '@react-navigation/native'; // Importe o Link correto para navegação
+import {useRouter} from 'expo-router'
 
 import { useFonts, Inder_400Regular } from '@expo-google-fonts/inder';
 import { auth } from './../firebaseConfig';
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function App() {
-
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+  
   const handleLoginFirebase = () =>{
-    signInWithEmailAndPassword(auth, "dso7@aluno.ifal.edu.br", "ACAB1312" )
+    signInWithEmailAndPassword(auth, username, password )
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
     console.log(user);
+    router.replace('/home');
+
     // ...
   })
   .catch((error) => {
@@ -24,9 +30,7 @@ export default function App() {
     console.log(errorMessage);
   });
   }
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
+ 
   let [fontsLoaded] = useFonts({
     Inder_400Regular,
   });
