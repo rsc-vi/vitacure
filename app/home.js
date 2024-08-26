@@ -21,7 +21,10 @@ const handleLogout = async () => {
     </View>
 
   );
+  
 
 }
+
+
 
 export default Home;

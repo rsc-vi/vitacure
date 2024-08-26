@@ -28,6 +28,11 @@ export default function App() {
     }
 
   }
+
+  const handleCadastrarFirebase =  () =>{
+    router.replace('/cadastrar');
+
+  }
  
   let [fontsLoaded] = useFonts({
     Inder_400Regular,
@@ -66,6 +71,8 @@ export default function App() {
         />
 
       <Button title="Acessar Firebase" onPress={handleLoginFirebase} />
+      <Text></Text>
+      <Button title="Cadastrar" onPress={handleCadastrarFirebase} />
 
         {/* <View> */}
           {/* 
