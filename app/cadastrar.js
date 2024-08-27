@@ -1,4 +1,4 @@
-import { Button, Image, Text, TextInput, StyleSheet, View } from 'react-native';
+import { Alert, Button, Image, Text, TextInput, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import {useState} from 'react'
 import {auth} from '../firebaseConfig'
@@ -38,10 +38,11 @@ const handleCadastrarUserFirebase = async () =>{
     console.log(user);
     router.replace('/home');
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error(errorCode);
-      console.error(errorMessage)
+      // const errorCode = error.code;
+      // const errorMessage = error.message;
+      // console.error(errorCode);
+      // console.error(errorMessage)
+      Alert.alert('Erro', error.message)
     }
 
   }
