@@ -79,6 +79,8 @@ return (
       />
 
 <Button title="Cadastrar" onPress={handleCadastrarUserFirebase} />
+<Button title="Voltar" onPress={() => router.replace('/')} />
+
 
 </View>
 </View>
