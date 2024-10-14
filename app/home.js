@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { useRouter } from 'expo-router';
 import { auth } from '../firebaseConfig';
 import { signOut } from 'firebase/auth';
@@ -25,12 +25,8 @@ const Home = () => {
       </View>
       <StatusBar style="auto" />
       
-
-      
-      <Avatar.Image size={24} source={require('../img/motoboyy.png')}/>
-      
-    
-      
+      {/* Verifique se o caminho da imagem está correto */}
+      <Avatar.Image size={64} source={require('../assets/motoboyy.png')} />
     </View>
   );
 };
@@ -38,7 +34,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between', // Alinhamento para ocupar o espaço
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'blue',
     paddingTop: 50,
@@ -63,7 +59,8 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   buttonContainer: {
-    marginBottom: 20, // Margem inferior para o botão
+    marginBottom: 20,
   },
 });
+
 export default Home;
