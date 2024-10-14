@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { auth } from '../firebaseConfig';
 import { signOut } from 'firebase/auth';
@@ -20,13 +20,20 @@ const Home = () => {
       <View style={styles.card}>
         <Text style={styles.welcome}>Seja bem-vindo(a), {user?.email}</Text>
       </View>
+
+      {/* Avatar pressionável com navegação diretamente no onPress */}
+      <Pressable onPress={() => router.push('/consulta')}>
+        <Avatar.Image size={64} source={require('../assets/consulta.png')} />
+      </Pressable>
+
       <View style={styles.buttonContainer}>
         <Button title="Sair" onPress={handleLogout} />
       </View>
-      <StatusBar style="auto" />
       
-      {/* Verifique se o caminho da imagem está correto */}
-      <Avatar.Image size={64} source={require('../assets/motoboyy.png')} />
+      <StatusBar style="auto" />
+
+      {/* Outro Avatar, verifique se o caminho da imagem está correto */}
+      <Avatar.Image size={64} source={require('../assets/motoqueiro.png')} />
     </View>
   );
 };
