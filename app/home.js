@@ -56,6 +56,34 @@ const Home = () => {
         </View>
       </View>
 
+      {/* Adicionando quatro novos cards abaixo dos avatares, agora com imagens */}
+      <View style={styles.newCardContainer}>
+        <View style={styles.newCard}>
+          <Image 
+            // source={require('../assets/imagem1.png')} 
+            // style={styles.newCardImage} 
+          />
+        </View>
+        <View style={styles.newCard}>
+          <Image 
+            source={require('../assets/consulta.png')} 
+            style={styles.newCardImage} 
+          />
+        </View>
+        <View style={styles.newCard}>
+          <Image 
+            // source={require('../assets/imagem3.png')} 
+            // style={styles.newCardImage} 
+          />
+        </View>
+        <View style={styles.newCard}>
+          <Image 
+            // source={require('../assets/imagem4.png')} 
+            // style={styles.newCardImage} 
+          />
+        </View>
+      </View>
+
       <StatusBar style="auto" />
     </View>
   );
@@ -69,12 +97,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   image: {
-    position: 'absolute',  // Faz com que a imagem seja posicionada de forma absoluta
-    top: 10,               // Distância do topo da tela
-    right: 10,             // Distância da borda direita da tela
-    width: 200,            // Ajuste o tamanho conforme necessário
-    height: 100,           // Ajuste o tamanho conforme necessário
-    resizeMode: 'contain', // Garante que a imagem não distorça
+    position: 'absolute', 
+    top: 10, 
+    right: 10, 
+    width: 200, 
+    height: 100, 
+    resizeMode: 'contain',
   },
   logoutButton: {
     position: 'absolute',
@@ -102,13 +130,49 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   avatarContainer: {
-    flexDirection: 'row', // Organiza os elementos em linha
-    justifyContent: 'center', // Alinha os itens no centro
-    alignItems: 'center', // Alinha verticalmente no centro
-    marginBottom: 20, // Espaço abaixo dos avatares
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
   },
   avatar: {
-    marginLeft: 10, // Adiciona um espaço pequeno entre os avatares
+    marginLeft: 10,
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginBottom: 20,
+  },
+  cardComponent: {
+    width: 100,
+    height: 100,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
+  },
+  newCardContainer: {
+    width: '100%',
+    padding: 20,
+  },
+  newCard: {
+    backgroundColor: '#e0e0e0',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  newCardImage: {
+    width: '100%',   // Ajuste a largura da imagem
+    height: 150,     // Ajuste a altura da imagem conforme necessário
+    borderRadius: 10,
+    resizeMode: 'cover', // Ajusta a imagem para cobrir o espaço sem distorcer
   },
 });
 
