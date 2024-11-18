@@ -1,75 +1,88 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, Button, Pressable, Image } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, TextInput, Button } from 'react-native';
 import { useRouter } from 'expo-router';
-import { auth } from '../firebaseConfig';
-import { signOut } from 'firebase/auth';
-import { Avatar, Card } from 'react-native-paper';
+import { useFonts, Inder_400Regular } from '@expo-google-fonts/inder';
+import { auth } from './../firebaseConfig';
+import { signInWithEmailAndPassword } from "firebase/auth";
 
-const Home = () => {
-  const user = auth.currentUser;
+export default function App() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   const router = useRouter();
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    router.replace('/');
+  const handleLoginFirebase = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, username, password);
+      // Usuário autenticado com sucesso
+      const user = userCredential.user;
+      console.log(user);
+      router.replace('/home');
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode, errorMessage);
+    }
   };
+
+  const handleCadastrarFirebase = () => {
+    router.replace('/cadastrar');
+  };
+
+  let [fontsLoaded] = useFonts({
+    Inder_400Regular,
+  });
+
+  // Verifica se as fontes foram carregadas antes de renderizar
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
-      {/* Imagem posicionada no canto superior direito */}
       <Image
         source={require('./../assets/logovitacure-Photoroom.png')}
         style={styles.image}
       />
-
-      <View style={styles.logoutButton}>
-        <Button title="Sair" onPress={handleLogout} />
+      <View style={styles.login}>
+        <TextInput
+          style={styles.input}
+          placeholder="Nome de usuário"
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={true}
+        />
+        <Button title="Acessar Firebase" onPress={handleLoginFirebase} />
+        <Text></Text>
+        <Button title="Cadastrar" onPress={handleCadastrarFirebase} />
       </View>
-
-      <View style={styles.card}>
-        <Text style={styles.welcome}>Seja bem-vindo(a), {user?.email}</Text>
-      </View>
-
-      {/* Adicionando uma view com flexDirection: 'row' para os avatares e Pressable ficarem lado a lado */}
-      <View style={styles.avatarContainer}>
-        <Avatar.Image size={64} source={require('../assets/motoqueiro.png')} style={styles.avatar} />
-        <Avatar.Image size={64} source={require('../assets/bater-papo.png')} style={styles.avatar} />
-        <Avatar.Image size={64} source={require('../assets/receita.png')} style={styles.avatar} />
-        <Avatar.Image size={64} source={require('../assets/farmacia.png')} style={styles.avatar} />
-
-        <Pressable onPress={() => router.push('/consulta')}>
-          <Avatar.Image size={64} source={require('../assets/consulta.png')} />
-        </Pressable>
-      </View>
-
-      <StatusBar style="auto" />
     </View>
   );
-
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'blue',
   },
   image: {
-    position: 'absolute',  // Faz com que a imagem seja posicionada de forma absoluta
-    top: 10,               // Distância do topo da tela
-    right: 10,             // Distância da borda direita da tela
-    width: 200,            // Ajuste o tamanho conforme necessário
-    height: 100,           // Ajuste o tamanho conforme necessário
-    resizeMode: 'contain', // Garante que a imagem não distorça
+    width: 100,
+    height: 100,
+    marginBottom: 20,
+    alignSelf: 'flex-start',
   },
-  logoutButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-  },
-  card: {
+  login: {
+    borderWidth: 1,
     padding: 30,
     backgroundColor: 'white',
     borderRadius: 10,
@@ -82,22 +95,13 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     alignItems: 'center',
-    marginBottom: 20,
   },
-  welcome: {
-    fontSize: 24,
-    color: 'black',
-    textAlign: 'center',
-  },
-  avatarContainer: {
-    flexDirection: 'row', // Organiza os elementos em linha
-    justifyContent: 'center', // Alinha os itens no centro
-    alignItems: 'center', // Alinha verticalmente no centro
-    marginBottom: 20, // Espaço abaixo dos avatares
-  },
-  avatar: {
-    marginLeft: 10, // Adiciona um espaço pequeno entre os avatares
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+    width: '100%',
   },
 });
-
-export default Home;
