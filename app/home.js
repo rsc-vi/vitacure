@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Button, Pressable, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { auth } from '../firebaseConfig';
 import { signOut } from 'firebase/auth';
@@ -17,23 +17,46 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
+      {/* Imagem posicionada no canto superior direito */}
+      <Image
+        source={require('./../assets/logovitacure-Photoroom.png')}
+        style={styles.image}
+      />
+
+      <View style={styles.logoutButton}>
+        <Button title="Sair" onPress={handleLogout} />
+      </View>
+
       <View style={styles.card}>
         <Text style={styles.welcome}>Seja bem-vindo(a), {user?.email}</Text>
       </View>
 
-      {/* Avatar pressionável com navegação diretamente no onPress */}
-      <Pressable onPress={() => router.push('/consulta')}>
-        <Avatar.Image size={64} source={require('../assets/consulta.png')} />
-      </Pressable>
+      {/* Adicionando uma view com flexDirection: 'row' para os avatares e Pressable ficarem lado a lado */}
+      <View style={styles.avatarContainer}>
+        <Avatar.Image size={64} source={require('../assets/motoqueiro.png')} style={styles.avatar} />
+        <Avatar.Image size={64} source={require('../assets/bater-papo.png')} style={styles.avatar} />
+        <Avatar.Image size={64} source={require('../assets/receita.png')} style={styles.avatar} />
+        <Avatar.Image size={64} source={require('../assets/farmacia.png')} style={styles.avatar} />
 
-      <View style={styles.buttonContainer}>
-        <Button title="Sair" onPress={handleLogout} />
+        <Pressable onPress={() => router.push('/consulta')}>
+          <Avatar.Image size={64} source={require('../assets/consulta.png')} />
+        </Pressable>
       </View>
-      
-      <StatusBar style="auto" />
 
-      {/* Outro Avatar, verifique se o caminho da imagem está correto */}
-      <Avatar.Image size={64} source={require('../assets/motoqueiro.png')} />
+      {/* Card components com imagens placeholder */}
+      <View style={styles.cardContainer}>
+        <View style={styles.cardComponent}>
+          <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.cardImage} />
+        </View>
+        <View style={styles.cardComponent}>
+          <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.cardImage} />
+        </View>
+        <View style={styles.cardComponent}>
+          <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.cardImage} />
+        </View>
+      </View>
+
+      <StatusBar style="auto" />
     </View>
   );
 };
@@ -41,10 +64,22 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'blue',
-    paddingTop: 50,
+    backgroundColor: 'white',
+  },
+  image: {
+    position: 'absolute',  // Faz com que a imagem seja posicionada de forma absoluta
+    top: 10,               // Distância do topo da tela
+    right: 10,             // Distância da borda direita da tela
+    width: 200,            // Ajuste o tamanho conforme necessário
+    height: 100,           // Ajuste o tamanho conforme necessário
+    resizeMode: 'contain', // Garante que a imagem não distorça
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
   },
   card: {
     padding: 30,
@@ -64,9 +99,16 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 24,
     color: 'black',
+    textAlign: 'center',
   },
-  buttonContainer: {
-    marginBottom: 20,
+  avatarContainer: {
+    flexDirection: 'row', // Organiza os elementos em linha
+    justifyContent: 'center', // Alinha os itens no centro
+    alignItems: 'center', // Alinha verticalmente no centro
+    marginBottom: 20, // Espaço abaixo dos avatares
+  },
+  avatar: {
+    marginLeft: 10, // Adiciona um espaço pequeno entre os avatares
   },
 });
 
