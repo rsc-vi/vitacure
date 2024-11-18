@@ -44,7 +44,7 @@ const Home = () => {
       </View>
 
       {/* Card components com imagens placeholder */}
-      <View style={styles.cardContainer}>
+      {/* <View style={styles.cardContainer}>
         <View style={styles.cardComponent}>
           <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.cardImage} />
         </View>
@@ -54,7 +54,7 @@ const Home = () => {
         <View style={styles.cardComponent}>
           <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.cardImage} />
         </View>
-      </View>
+      </View> */}
 
       {/* Adicionando quatro novos cards abaixo dos avatares, agora com imagens */}
       <View style={styles.newCardContainer}>
