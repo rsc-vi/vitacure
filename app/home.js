@@ -36,7 +36,10 @@ const Home = () => {
         <Avatar.Image size={64} source={require('../assets/motoqueiro.png')} style={styles.avatar} />
         <Avatar.Image size={64} source={require('../assets/bater-papo.png')} style={styles.avatar} />
         <Avatar.Image size={64} source={require('../assets/receita.png')} style={styles.avatar} />
+
+        <Pressable onPress={() => router.push('/farmacia')}>
         <Avatar.Image size={64} source={require('../assets/farmacia.png')} style={styles.avatar} />
+        </Pressable>
 
         <Pressable onPress={() => router.push('/consulta')}>
           <Avatar.Image size={64} source={require('../assets/consulta.png')} />
@@ -44,42 +47,32 @@ const Home = () => {
       </View>
 
       {/* Card components com imagens placeholder */}
-      {/* <View style={styles.cardContainer}>
-        <View style={styles.cardComponent}>
-          <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.cardImage} />
-        </View>
-        <View style={styles.cardComponent}>
-          <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.cardImage} />
-        </View>
-        <View style={styles.cardComponent}>
-          <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.cardImage} />
-        </View>
-      </View> */}
+     
 
       {/* Adicionando quatro novos cards abaixo dos avatares, agora com imagens */}
       <View style={styles.newCardContainer}>
         <View style={styles.newCard}>
           <Image 
-            // source={require('../assets/imagem1.png')} 
-            // style={styles.newCardImage} 
-          />
-        </View>
-        <View style={styles.newCard}>
-          <Image 
-            source={require('../assets/consulta.png')} 
+          source={require('../assets/poliomielite.png')} 
             style={styles.newCardImage} 
           />
         </View>
         <View style={styles.newCard}>
           <Image 
-            // source={require('../assets/imagem3.png')} 
-            // style={styles.newCardImage} 
+            source={require('../assets/setembroamarelo.png')} 
+            style={styles.newCardImage} 
           />
         </View>
         <View style={styles.newCard}>
           <Image 
-            // source={require('../assets/imagem4.png')} 
-            // style={styles.newCardImage} 
+            source={require('../assets/rosa.png')} 
+            style={styles.newCardImage} 
+          />
+        </View>
+        <View style={styles.newCard}>
+          <Image 
+            source={require('../assets/novembroazul.png')} 
+            style={styles.newCardImage} 
           />
         </View>
       </View>
@@ -170,7 +163,7 @@ const styles = StyleSheet.create({
   },
   newCardImage: {
     width: '100%',   // Ajuste a largura da imagem
-    height: 150,     // Ajuste a altura da imagem conforme necessário
+    height: 50,     // Ajuste a altura da imagem conforme necessário
     borderRadius: 10,
     resizeMode: 'cover', // Ajusta a imagem para cobrir o espaço sem distorcer
   },
