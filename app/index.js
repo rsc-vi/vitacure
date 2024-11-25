@@ -44,7 +44,7 @@ export default function App() {
       <Image
         source={require('./../assets/logovitacure-Photoroom.png')}
         style={styles.image}
-      />
+      /> 
       <View style={styles.login}>
         <TextInput
           style={styles.input}
