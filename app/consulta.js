@@ -5,83 +5,82 @@ import { useRouter } from 'expo-router';
 
 const lista_de_consultas = [
   {
-    medico: { nome: 'Dra. Adriana Lima' },
+    medico: { nome: 'Dra. Adriana Lima', crm: '123456' },
     especializacao: 'Psicologa',
     data: '15/Mar/2024.',
     horario: '08h30',
   },
   {
-    medico: { nome: 'Dr. José Roselito' },
+    medico: { nome: 'Dr. José Roselito', crm: '234567' },
     especializacao: 'Ortopedista',
     data: '08/Abr/2024.',
     horario: '09h00',
   },
   {
-    medico: { nome: 'Dr. João Silva' },
+    medico: { nome: 'Dr. João Silva', crm: '345678' },
     especializacao: 'Clinico Geral',
     data: '27/Jul/2024.',
     horario: '14h20',
   },
   {
-    medico: { nome: 'Dr. Jair Pinto' },
+    medico: { nome: 'Dr. Jair Pinto', crm: '456789' },
     especializacao: 'Urologista',
     data: '20/Set/2024.',
     horario: '09h00',
   },
   {
-    medico: { nome: 'Dr. Aurelio Paz' },
+    medico: { nome: 'Dr. Aurelio Paz', crm: '567890' },
     especializacao: 'Alergologista',
     data: '25/Nov/2024.',
     horario: '10h00',
   },
   {
-    medico: { nome: 'Dr. Eduardo Rubio' },
+    medico: { nome: 'Dr. Eduardo Rubio', crm: '678901' },
     especializacao: 'Cardiologista',
     data: '14/Dez/2024.',
     horario: '07h00',
   },
   {
-    medico: { nome: 'Dr. Marcelo Costa' },
+    medico: { nome: 'Dr. Marcelo Costa', crm: '789012' },
     especializacao: 'Dermatologista',
     data: '19/Dez/2024.',
     horario: '09h30',
   },
 
   {
-    medico: { nome: 'Dra. Andressa Mello' },
+    medico: { nome: 'Dra. Amanda Mello', crm: '890123' },
     especializacao: 'Nutricionista',
     data: '03/Jan/2025.',
     horario: '08h30',
   },
 
   {
-    medico: { nome: 'Dr. Murilo Almeida' },
+    medico: { nome: 'Dr. Murilo Almeida', crm: '901234' },
     especializacao: 'Oftalmologista',
     data: '04/Jan/2025.',
     horario: '10h00',
   },
 
   {
-    medico: { nome: 'Dra. Adriana Lima' },
+    medico: { nome: 'Dra. Vivian Lima', crm: '012345' },
     especializacao: 'Psicologa',
     data: '12/Jan/2025.',
     horario: '08h30',
   },
 
   {
-    medico: { nome: 'Dra. Andressa Mello' },
+    medico: { nome: 'Dra. Andressa Mello', crm: '123457' },
     especializacao: 'Nutricionista',
     data: '08/Fev/2025.',
     horario: '08h30',
   },
 
-  {medico: { nome: 'Dr. Eduardo Rubio' },
+  {
+    medico: { nome: 'Dr. Daniel Rubio', crm: '234568' },
     especializacao: 'Cardiologista',
     data: '25/Fev/2025.',
     horario: '11h00',
   },
-
-
 ];
 
 const Consulta = () => {
@@ -117,7 +116,7 @@ const Consulta = () => {
       </View>
       <FlatList
         data={lista_de_consultas}
-        keyExtractor={(item) => item.medico.nome}
+        keyExtractor={(item) => item.medico.crm}
         renderItem={({ item }) => (
           <List.Item
             title={item.especializacao}
@@ -127,6 +126,7 @@ const Consulta = () => {
               <View style={styles.rightContainer}>
                 <Text style={styles.dateText}>{item.data}</Text>
                 <Text style={styles.timeText}>{item.horario}</Text>
+                <Text style={styles.crmText}>CRM: {item.medico.crm}</Text>
               </View>
             )}
             style={styles.listItem}
@@ -144,15 +144,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 50,
     backgroundColor: "#00B4D8",
-
   },
 
   iconButton: {
-      borderWidth: 2,
-      borderColor: 'black',
-      borderRadius: 50, // Tornando a borda arredondada
-      padding: 5, // Espaço entre o ícone e a borda
-    },
+    borderWidth: 2,
+    borderColor: 'black',
+    borderRadius: 50, // Tornando a borda arredondada
+    padding: 5, // Espaço entre o ícone e a borda
+  },
 
   backButton: {
     position: 'absolute',
@@ -190,6 +189,11 @@ const styles = StyleSheet.create({
   timeText: {
     fontSize: 14,
     color: 'gray',
+  },
+  crmText: {
+    fontSize: 14,
+    color: 'green',
+    marginTop: 5,
   },
 });
 
