@@ -4,9 +4,6 @@ import {useState} from 'react'
 import {auth} from '../firebaseConfig'
 import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 
-
-
-
 const Cadastrar = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
