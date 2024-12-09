@@ -1,96 +1,76 @@
 import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, Text, TextInput, StyleSheet, View } from 'react-native';
+import { Alert, Button, Image, Text, TextInput, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
-import {useState} from 'react'
-import {auth} from '../firebaseConfig'
+import { useState } from 'react';
+import { auth } from '../firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Cadastrar = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [repetirSenha, setRepetirSenha] = useState('');
-    const [setLoading] = useState(false);
-    const router = useRouter();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [repetirSenha, setRepetirSenha] = useState('');
+  const [loading, setLoading] = useState(false); // Estado para controlar o ActivityIndicator
+  const router = useRouter();
 
-const handleLogout = async () => {
-
-    
- try{ 
-    setLoading(true)
-    await createUserWithEmailAndPassword(auth, username, password);
-    router.replace('/home');
-
-    } catch(error){
-        console.error(error.code);
-        console.error(error.message);
-    } finally {
-        setLoading(false);
+  const handleCadastrarUserFirebase = async () => {
+    if (password !== repetirSenha) {
+      Alert.alert('Erro', 'As senhas não coincidem.');
+      return;
     }
-}
-
-const handleCadastrarUserFirebase = async () =>{
-    try{
-    const userCredential = await createUserWithEmailAndPassword(auth, username, password )
-    // Signed in 
-    const user = userCredential.user;
-    console.log(user);
-    router.replace('/home');
+    setLoading(true); // Mostra o ActivityIndicator
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, username, password);
+      // Usuário cadastrado com sucesso
+      const user = userCredential.user;
+      console.log(user);
+      router.replace('/index');
     } catch (error) {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-      // console.error(errorCode);
-      // console.error(errorMessage)
-      Alert.alert('Erro', error.message)
+      Alert.alert('Erro', error.message);
+      console.error(error.code);
+      console.error(error.message);
+    } finally {
+      setLoading(false); // Esconde o ActivityIndicator
     }
+  };
 
-  }
-
-
-return (
+  return (
     <View style={styles.container}>
       <StatusBar style="light" backgroundColor="blue" />
-    <Image
-      source={require('./../assets/logovitacure-Photoroom.png')}
-      style={styles.image}
-    />
-    <View style={styles.login}>
-      <TextInput
-        style={styles.input}
-        placeholder="Nome de usuário"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
+      <Image
+        source={require('./../assets/logovitacure-Photoroom.png')}
+        style={styles.image}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry={true}
-      />
+      <View style={styles.login}>
+        <TextInput
+          style={styles.input}
+          placeholder="Nome de usuário"
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={true}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Repetir senha"
+          value={repetirSenha}
+          onChangeText={setRepetirSenha}
+          secureTextEntry={true}
+        />
+        <Button title="Cadastrar" onPress={handleCadastrarUserFirebase} />
+        <Button title="Voltar" onPress={() => router.replace('/')} />
 
-<TextInput
-        style={styles.input}
-        placeholder="Repetir senha"
-        value={repetirSenha}
-        onChangeText={setRepetirSenha}
-        secureTextEntry={true}
-      />
-
-<Button title="Cadastrar" onPress={handleCadastrarUserFirebase} />
-<Button title="Voltar" onPress={() => router.replace('/')} />
-
-
-</View>
-</View>
-
-
-
-    
-    );
-
-    
-} 
+        {/* ActivityIndicator para carregamento */}
+        {loading && <ActivityIndicator size="large" color="blue" style={styles.loader} />}
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -128,9 +108,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: '100%',
   },
+  loader: {
+    marginTop: 10,
+  },
 });
-
-
-
 
 export default Cadastrar;

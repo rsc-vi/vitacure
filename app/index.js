@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, Button, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFonts, Inder_400Regular } from '@expo-google-fonts/inder';
 import { auth } from './../firebaseConfig';
@@ -9,10 +9,12 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 export default function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false); // Estado para controlar o ActivityIndicator
 
   const router = useRouter();
 
   const handleLoginFirebase = async () => {
+    setLoading(true); // Mostra o ActivityIndicator
     try {
       const userCredential = await signInWithEmailAndPassword(auth, username, password);
       // Usuário autenticado com sucesso
@@ -23,6 +25,8 @@ export default function App() {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.error(errorCode, errorMessage);
+    } finally {
+      setLoading(false); // Esconde o ActivityIndicator
     }
   };
 
@@ -47,7 +51,7 @@ export default function App() {
       <Image
         source={require('./../assets/logovitacure-Photoroom.png')}
         style={styles.image}
-      /> 
+      />
       <View style={styles.login}>
         <TextInput
           style={styles.input}
@@ -63,9 +67,13 @@ export default function App() {
           onChangeText={setPassword}
           secureTextEntry={true}
         />
+        {/* Botão para login */}
         <Button title="Acessar Firebase" onPress={handleLoginFirebase} />
         <Text></Text>
         <Button title="Cadastrar" onPress={handleCadastrarFirebase} />
+        
+        {/* ActivityIndicator para carregamento */}
+        {loading && <ActivityIndicator size="large" color="blue" style={styles.loader} />}
       </View>
     </View>
   );
@@ -106,5 +114,8 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     width: '100%',
+  },
+  loader: {
+    marginTop: 10,
   },
 });
