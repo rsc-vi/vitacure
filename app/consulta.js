@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { IconButton, List } from 'react-native-paper';
@@ -92,6 +93,7 @@ const Consulta = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="dark" backgroundColor="blue" />
       <IconButton
         icon="arrow-left"
         iconColor="#000"

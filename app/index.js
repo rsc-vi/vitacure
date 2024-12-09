@@ -41,6 +41,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      {/* Adicionando a StatusBar */}
+      <StatusBar style="light" backgroundColor="blue" />
+
       <Image
         source={require('./../assets/logovitacure-Photoroom.png')}
         style={styles.image}

@@ -17,6 +17,9 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
+      {/* Configuração da StatusBar */}
+      <StatusBar style="dark" backgroundColor="blue" />
+
       {/* Imagem posicionada no canto superior direito */}
       <Image
         source={require('./../assets/logovitacure-Photoroom.png')}
@@ -38,7 +41,7 @@ const Home = () => {
         <Avatar.Image size={64} source={require('../assets/receita.png')} style={styles.avatar} />
 
         <Pressable onPress={() => router.push('/farmacia')}>
-        <Avatar.Image size={64} source={require('../assets/farmacia.png')} style={styles.avatar} />
+          <Avatar.Image size={64} source={require('../assets/farmacia.png')} style={styles.avatar} />
         </Pressable>
 
         <Pressable onPress={() => router.push('/consulta')}>
@@ -53,7 +56,7 @@ const Home = () => {
       <View style={styles.newCardContainer}>
         <View style={styles.newCard}>
           <Image 
-          source={require('../assets/poliomielite.png')} 
+            source={require('../assets/poliomielite.png')} 
             style={styles.newCardImage} 
           />
         </View>
@@ -76,8 +79,6 @@ const Home = () => {
           />
         </View>
       </View>
-
-      <StatusBar style="auto" />
     </View>
   );
 };
