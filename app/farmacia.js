@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View, Image } from 'react-native';
-import { IconButton, List } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 
 // Dados dos remédios (nome e imagem)

@@ -2,13 +2,13 @@ import { Alert, Button, Image, Text, TextInput, StyleSheet, View } from 'react-n
 import { useRouter } from 'expo-router';
 import {useState} from 'react'
 import {auth} from '../firebaseConfig'
-import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Cadastrar = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [repetirSenha, setRepetirSenha] = useState('');
-    const [isLoading, setLoading] = useState(false);
+    const [setLoading] = useState(false);
     const router = useRouter();
 
 const handleLogout = async () => {
