@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Button, Pressable, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, Pressable, Image, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { auth } from '../firebaseConfig';
 import { signOut } from 'firebase/auth';
@@ -15,12 +15,15 @@ const Home = () => {
     router.replace('/');
   };
 
+  // Função para exibir o alerta
+  const handleNotImplemented = () => {
+    Alert.alert('Aviso', 'Função ainda não implementada.');
+  };
+
   return (
     <View style={styles.container}>
-      {/* Configuração da StatusBar */}
       <StatusBar style="dark" backgroundColor="blue" />
 
-      {/* Imagem posicionada no canto superior direito */}
       <Image
         source={require('./../assets/logovitacure-Photoroom.png')}
         style={styles.image}
@@ -34,49 +37,57 @@ const Home = () => {
         <Text style={styles.welcome}>Seja bem-vindo(a), {user?.email}</Text>
       </View>
 
-      {/* Adicionando uma view com flexDirection: 'row' para os avatares e Pressable ficarem lado a lado */}
       <View style={styles.avatarContainer}>
-        <Avatar.Image size={64} source={require('../assets/motoqueiro.png')} style={styles.avatar} />
-        <Avatar.Image size={64} source={require('../assets/bater-papo.png')} style={styles.avatar} />
-        <Avatar.Image size={64} source={require('../assets/receita.png')} style={styles.avatar} />
-
+        {/* Avatares com alert */}
+        <Pressable onPress={handleNotImplemented}>
+          <Avatar.Image size={64} source={require('../assets/motoqueiro.png')} style={styles.avatar} />
+        </Pressable>
+        <Pressable onPress={handleNotImplemented}>
+          <Avatar.Image size={64} source={require('../assets/bater-papo.png')} style={styles.avatar} />
+        </Pressable>
+        <Pressable onPress={handleNotImplemented}>
+          <Avatar.Image size={64} source={require('../assets/receita.png')} style={styles.avatar} />
+        </Pressable>
         <Pressable onPress={() => router.push('/farmacia')}>
           <Avatar.Image size={64} source={require('../assets/farmacia.png')} style={styles.avatar} />
         </Pressable>
-
         <Pressable onPress={() => router.push('/consulta')}>
           <Avatar.Image size={64} source={require('../assets/consulta.png')} />
         </Pressable>
       </View>
 
-      {/* Card components com imagens placeholder */}
-     
-
-      {/* Adicionando quatro novos cards abaixo dos avatares, agora com imagens */}
       <View style={styles.newCardContainer}>
         <View style={styles.newCard}>
-          <Image 
-            source={require('../assets/poliomielite.png')} 
-            style={styles.newCardImage} 
-          />
+          <Pressable onPress={handleNotImplemented}>
+            <Image 
+              source={require('../assets/poliomielite.png')} 
+              style={styles.newCardImage} 
+            />
+          </Pressable>
         </View>
         <View style={styles.newCard}>
-          <Image 
-            source={require('../assets/setembroamarelo.png')} 
-            style={styles.newCardImage} 
-          />
+          <Pressable onPress={handleNotImplemented}>
+            <Image 
+              source={require('../assets/setembroamarelo.png')} 
+              style={styles.newCardImage} 
+            />
+          </Pressable>
         </View>
         <View style={styles.newCard}>
-          <Image 
-            source={require('../assets/rosa.png')} 
-            style={styles.newCardImage} 
-          />
+          <Pressable onPress={handleNotImplemented}>
+            <Image 
+              source={require('../assets/rosa.png')} 
+              style={styles.newCardImage} 
+            />
+          </Pressable>
         </View>
         <View style={styles.newCard}>
-          <Image 
-            source={require('../assets/novembroazul.png')} 
-            style={styles.newCardImage} 
-          />
+          <Pressable onPress={handleNotImplemented}>
+            <Image 
+              source={require('../assets/novembroazul.png')} 
+              style={styles.newCardImage} 
+            />
+          </Pressable>
         </View>
       </View>
     </View>
@@ -132,25 +143,6 @@ const styles = StyleSheet.create({
   avatar: {
     marginLeft: 10,
   },
-  cardContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    marginBottom: 20,
-  },
-  cardComponent: {
-    width: 100,
-    height: 100,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cardImage: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 10,
-  },
   newCardContainer: {
     width: '100%',
     padding: 20,
@@ -163,10 +155,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   newCardImage: {
-    width: '100%',   // Ajuste a largura da imagem
-    height: 50,     // Ajuste a altura da imagem conforme necessário
+    width: '100%', 
+    height: 50, 
     borderRadius: 10,
-    resizeMode: 'cover', // Ajusta a imagem para cobrir o espaço sem distorcer
+    resizeMode: 'cover', 
   },
 });
 
