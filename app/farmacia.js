@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { FlatList, StyleSheet, Text, View, Image } from 'react-native';
 import { IconButton } from 'react-native-paper';
@@ -44,6 +45,7 @@ const Remedios = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="dark" backgroundColor="blue" />
       <IconButton
         icon="arrow-left"
         iconColor="#00ffff"

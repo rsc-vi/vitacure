@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar';
 import { Alert, Button, Image, Text, TextInput, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import {useState} from 'react'
@@ -47,6 +48,7 @@ const handleCadastrarUserFirebase = async () =>{
 
 return (
     <View style={styles.container}>
+      <StatusBar style="light" backgroundColor="blue" />
     <Image
       source={require('./../assets/logovitacure-Photoroom.png')}
       style={styles.image}
