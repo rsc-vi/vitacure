@@ -57,35 +57,35 @@ const Home = () => {
       </View>
 
       <View style={styles.newCardContainer}>
-        <View style={styles.newCard}>
+        <View style={styles.newCardImage}>
           <Pressable onPress={handleNotImplemented}>
             <Image 
               source={require('../assets/poliomielite.png')} 
-              style={styles.newCardImage} 
+              style={styles.newCard} 
             />
           </Pressable>
         </View>
-        <View style={styles.newCard}>
+        <View style={styles.newCardImage}>
           <Pressable onPress={handleNotImplemented}>
             <Image 
               source={require('../assets/setembroamarelo.png')} 
-              style={styles.newCardImage} 
+              style={styles.newCard} 
             />
           </Pressable>
         </View>
-        <View style={styles.newCard}>
+        <View style={styles.newCardImage}>
           <Pressable onPress={handleNotImplemented}>
             <Image 
               source={require('../assets/rosa.png')} 
-              style={styles.newCardImage} 
+              style={styles.newCard} 
             />
           </Pressable>
         </View>
-        <View style={styles.newCard}>
+        <View style={styles.newCardImage}>
           <Pressable onPress={handleNotImplemented}>
             <Image 
               source={require('../assets/novembroazul.png')} 
-              style={styles.newCardImage} 
+              style={styles.newCard} 
             />
           </Pressable>
         </View>
@@ -146,7 +146,10 @@ const styles = StyleSheet.create({
   newCardContainer: {
     width: '100%',
     padding: 20,
+    justifyContent: 'center', 
+    alignItems: 'center',
   },
+  
   newCard: {
     backgroundColor: '#e0e0e0',
     padding: 10,
@@ -159,6 +162,7 @@ const styles = StyleSheet.create({
     height: 50, 
     borderRadius: 10,
     resizeMode: 'cover', 
+    marginBottom: 30,
   },
 });
 
