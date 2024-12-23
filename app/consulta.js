@@ -1,91 +1,117 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { IconButton, List } from 'react-native-paper';
 import { useRouter } from 'expo-router';
+import { auth, db } from '../firebaseConfig'
+import { getFirestore, getDocs,collection, query, where } from "firebase/firestore";
 
-const lista_de_consultas = [
-  {
-    medico: { nome: 'Dra. Adriana Lima', crm: '123456' },
-    especializacao: 'Psicologa',
-    data: '15/Mar/2024.',
-    horario: '08h30',
-  },
-  {
-    medico: { nome: 'Dr. José Roselito', crm: '234567' },
-    especializacao: 'Ortopedista',
-    data: '08/Abr/2024.',
-    horario: '09h00',
-  },
-  {
-    medico: { nome: 'Dr. João Silva', crm: '345678' },
-    especializacao: 'Clinico Geral',
-    data: '27/Jul/2024.',
-    horario: '14h20',
-  },
-  {
-    medico: { nome: 'Dr. Jair Pinto', crm: '456789' },
-    especializacao: 'Urologista',
-    data: '20/Set/2024.',
-    horario: '09h00',
-  },
-  {
-    medico: { nome: 'Dr. Aurelio Paz', crm: '567890' },
-    especializacao: 'Alergologista',
-    data: '25/Nov/2024.',
-    horario: '10h00',
-  },
-  {
-    medico: { nome: 'Dr. Eduardo Rubio', crm: '678901' },
-    especializacao: 'Cardiologista',
-    data: '14/Dez/2024.',
-    horario: '07h00',
-  },
-  {
-    medico: { nome: 'Dr. Marcelo Costa', crm: '789012' },
-    especializacao: 'Dermatologista',
-    data: '19/Dez/2024.',
-    horario: '09h30',
-  },
 
-  {
-    medico: { nome: 'Dra. Amanda Mello', crm: '890123' },
-    especializacao: 'Nutricionista',
-    data: '03/Jan/2025.',
-    horario: '08h30',
-  },
+// const lista_de_consultas = [
+//   {
+//     medico: { nome: 'Dra. Adriana Lima', crm: '123456' },
+//     especializacao: 'Psicologa',
 
-  {
-    medico: { nome: 'Dr. Murilo Almeida', crm: '901234' },
-    especializacao: 'Oftalmologista',
-    data: '04/Jan/2025.',
-    horario: '10h00',
-  },
 
-  {
-    medico: { nome: 'Dra. Vivian Lima', crm: '012345' },
-    especializacao: 'Psicologa',
-    data: '12/Jan/2025.',
-    horario: '08h30',
-  },
+//     data: '15/Mar/2024.',
+//     horario: '08h30',
+//   },
+//   {
+//     medico: { nome: 'Dr. José Roselito', crm: '234567' },
+//     especializacao: 'Ortopedista',
+//     data: '08/Abr/2024.',
+//     horario: '09h00',
+//   },
+//   {
+//     medico: { nome: 'Dr. João Silva', crm: '345678' },
+//     especializacao: 'Clinico Geral',
+//     data: '27/Jul/2024.',
+//     horario: '14h20',
+//   },
+//   {
+//     medico: { nome: 'Dr. Jair Pinto', crm: '456789' },
+//     especializacao: 'Urologista',
+//     data: '20/Set/2024.',
+//     horario: '09h00',
+//   },
+//   {
+//     medico: { nome: 'Dr. Aurelio Paz', crm: '567890' },
+//     especializacao: 'Alergologista',
+//     data: '25/Nov/2024.',
+//     horario: '10h00',
+//   },
+//   {
+//     medico: { nome: 'Dr. Eduardo Rubio', crm: '678901' },
+//     especializacao: 'Cardiologista',
+//     data: '14/Dez/2024.',
+//     horario: '07h00',
+//   },
+//   {
+//     medico: { nome: 'Dr. Marcelo Costa', crm: '789012' },
+//     especializacao: 'Dermatologista',
+//     data: '19/Dez/2024.',
+//     horario: '09h30',
+//   },
 
-  {
-    medico: { nome: 'Dra. Andressa Mello', crm: '123457' },
-    especializacao: 'Nutricionista',
-    data: '08/Fev/2025.',
-    horario: '08h30',
-  },
+//   {
+//     medico: { nome: 'Dra. Amanda Mello', crm: '890123' },
+//     especializacao: 'Nutricionista',
+//     data: '03/Jan/2025.',
+//     horario: '08h30',
+//   },
 
-  {
-    medico: { nome: 'Dr. Daniel Rubio', crm: '234568' },
-    especializacao: 'Cardiologista',
-    data: '25/Fev/2025.',
-    horario: '11h00',
-  },
-];
+//   {
+//     medico: { nome: 'Dr. Murilo Almeida', crm: '901234' },
+//     especializacao: 'Oftalmologista',
+//     data: '04/Jan/2025.',
+//     horario: '10h00',
+//   },
+
+//   {
+//     medico: { nome: 'Dra. Vivian Lima', crm: '012345' },
+//     especializacao: 'Psicologa',
+//     data: '12/Jan/2025.',
+//     horario: '08h30',
+//   },
+
+//   {
+//     medico: { nome: 'Dra. Andressa Mello', crm: '123457' },
+//     especializacao: 'Nutricionista',
+//     data: '08/Fev/2025.',
+//     horario: '08h30',
+//   },
+
+//   {
+//     medico: { nome: 'Dr. Daniel Rubio', crm: '234568' },
+//     especializacao: 'Cardiologista',
+//     data: '25/Fev/2025.',
+//     horario: '11h00',
+//   },
+// ];
+
+
 
 const Consulta = () => {
+  const [consultas, setConsultas] = useState([]);
   const router = useRouter();
+  const user = auth.currentUser;
+
+  const getAllConsultas = async () => {
+    try {
+        const querySnapshot = await getDocs(query(collection(db, "consultas"), where("idUsuario", "==", user.uid)));
+        let array = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        console.log(array)
+        setConsultas(array);
+    } catch (error) {
+        console.error(error);
+    } finally {
+        // setLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+    getAllConsultas();
+  }, []);
 
   const handleLogout = async () => {
     router.replace('/home');
@@ -97,7 +123,7 @@ const Consulta = () => {
       <IconButton
         icon="arrow-left"
         iconColor="#000"
-        size={30}
+        size={30}setConsultas
         onPress={handleLogout}
         style={styles.backButton} // Adicionando estilo para o botão "Voltar"
       />
@@ -117,18 +143,18 @@ const Consulta = () => {
         />
       </View>
       <FlatList
-        data={lista_de_consultas}
-        keyExtractor={(item) => item.medico.crm}
+        data={consultas}
+        keyExtractor={(item) => item.crmMedico}
         renderItem={({ item }) => (
           <List.Item
             title={item.especializacao}
-            description={`${item.medico.nome}`}
+            description={`${item.nomeMedico}`}
             descriptionNumberOfLines={1}
             right={props => (
               <View style={styles.rightContainer}>
-                <Text style={styles.dateText}>{item.data}</Text>
-                <Text style={styles.timeText}>{item.horario}</Text>
-                <Text style={styles.crmText}>CRM: {item.medico.crm}</Text>
+                <Text style={styles.dateText}>{item.dataHora}</Text>
+                {/* <Text style={styles.timeText}>{item.horario}</Text> */}
+                <Text style={styles.crmText}>CRM: {item.crmMedico}</Text>
               </View>
             )}
             style={styles.listItem}
@@ -198,5 +224,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
+// Initialize Cloud Firestore and get a reference to the service
 
-export default Consulta;
+
+ export default Consulta;
