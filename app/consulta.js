@@ -7,87 +7,7 @@ import { auth, db } from '../firebaseConfig'
 import { getFirestore, getDocs,collection, query, where } from "firebase/firestore";
 
 
-// const lista_de_consultas = [
-//   {
-//     medico: { nome: 'Dra. Adriana Lima', crm: '123456' },
-//     especializacao: 'Psicologa',
 
-
-//     data: '15/Mar/2024.',
-//     horario: '08h30',
-//   },
-//   {
-//     medico: { nome: 'Dr. José Roselito', crm: '234567' },
-//     especializacao: 'Ortopedista',
-//     data: '08/Abr/2024.',
-//     horario: '09h00',
-//   },
-//   {
-//     medico: { nome: 'Dr. João Silva', crm: '345678' },
-//     especializacao: 'Clinico Geral',
-//     data: '27/Jul/2024.',
-//     horario: '14h20',
-//   },
-//   {
-//     medico: { nome: 'Dr. Jair Pinto', crm: '456789' },
-//     especializacao: 'Urologista',
-//     data: '20/Set/2024.',
-//     horario: '09h00',
-//   },
-//   {
-//     medico: { nome: 'Dr. Aurelio Paz', crm: '567890' },
-//     especializacao: 'Alergologista',
-//     data: '25/Nov/2024.',
-//     horario: '10h00',
-//   },
-//   {
-//     medico: { nome: 'Dr. Eduardo Rubio', crm: '678901' },
-//     especializacao: 'Cardiologista',
-//     data: '14/Dez/2024.',
-//     horario: '07h00',
-//   },
-//   {
-//     medico: { nome: 'Dr. Marcelo Costa', crm: '789012' },
-//     especializacao: 'Dermatologista',
-//     data: '19/Dez/2024.',
-//     horario: '09h30',
-//   },
-
-//   {
-//     medico: { nome: 'Dra. Amanda Mello', crm: '890123' },
-//     especializacao: 'Nutricionista',
-//     data: '03/Jan/2025.',
-//     horario: '08h30',
-//   },
-
-//   {
-//     medico: { nome: 'Dr. Murilo Almeida', crm: '901234' },
-//     especializacao: 'Oftalmologista',
-//     data: '04/Jan/2025.',
-//     horario: '10h00',
-//   },
-
-//   {
-//     medico: { nome: 'Dra. Vivian Lima', crm: '012345' },
-//     especializacao: 'Psicologa',
-//     data: '12/Jan/2025.',
-//     horario: '08h30',
-//   },
-
-//   {
-//     medico: { nome: 'Dra. Andressa Mello', crm: '123457' },
-//     especializacao: 'Nutricionista',
-//     data: '08/Fev/2025.',
-//     horario: '08h30',
-//   },
-
-//   {
-//     medico: { nome: 'Dr. Daniel Rubio', crm: '234568' },
-//     especializacao: 'Cardiologista',
-//     data: '25/Fev/2025.',
-//     horario: '11h00',
-//   },
-// ];
 
 
 
@@ -98,8 +18,16 @@ const Consulta = () => {
 
   const getAllConsultas = async () => {
     try {
+        console.log("1")
         const querySnapshot = await getDocs(query(collection(db, "consultas"), where("idUsuario", "==", user.uid)));
-        let array = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        let array = querySnapshot.docs.map((doc) => {
+          const resultado = {
+            id: doc.id,
+            novaDataHora: doc.data().dataHora.toDate(),
+            ...doc.data()
+          }
+          return resultado;
+        });
         console.log(array)
         setConsultas(array);
     } catch (error) {
@@ -112,6 +40,8 @@ const Consulta = () => {
   useEffect(() => {
     getAllConsultas();
   }, []);
+
+
 
   const handleLogout = async () => {
     router.replace('/home');
@@ -152,7 +82,7 @@ const Consulta = () => {
             descriptionNumberOfLines={1}
             right={props => (
               <View style={styles.rightContainer}>
-                <Text style={styles.dateText}>{item.dataHora}</Text>
+                <Text style={styles.dateText}>{item.novaDataHora.toLocaleDateString("pt-BR")} - {item.novaDataHora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</Text>
                 {/* <Text style={styles.timeText}>{item.horario}</Text> */}
                 <Text style={styles.crmText}>CRM: {item.crmMedico}</Text>
               </View>
@@ -164,6 +94,8 @@ const Consulta = () => {
     </View>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {
