@@ -3,13 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { IconButton, List } from 'react-native-paper';
 import { useRouter } from 'expo-router';
-import { auth, db } from '../firebaseConfig'
-import { getFirestore, getDocs,collection, query, where } from "firebase/firestore";
-
-
-
-
-
+import { auth, db } from '../firebaseConfig';
+import { getDocs, collection, query, where } from "firebase/firestore";
 
 const Consulta = () => {
   const [consultas, setConsultas] = useState([]);
@@ -18,30 +13,26 @@ const Consulta = () => {
 
   const getAllConsultas = async () => {
     try {
-        console.log("1")
+        console.log("1");
         const querySnapshot = await getDocs(query(collection(db, "consultas"), where("idUsuario", "==", user.uid)));
         let array = querySnapshot.docs.map((doc) => {
           const resultado = {
             id: doc.id,
             novaDataHora: doc.data().dataHora.toDate(),
             ...doc.data()
-          }
+          };
           return resultado;
         });
-        console.log(array)
+        console.log(array);
         setConsultas(array);
     } catch (error) {
         console.error(error);
-    } finally {
-        // setLoading(false);
     }
   };
   
   useEffect(() => {
     getAllConsultas();
   }, []);
-
-
 
   const handleLogout = async () => {
     router.replace('/home');
@@ -53,7 +44,7 @@ const Consulta = () => {
       <IconButton
         icon="arrow-left"
         iconColor="#000"
-        size={30}setConsultas
+        size={30}
         onPress={handleLogout}
         style={styles.backButton} // Adicionando estilo para o botão "Voltar"
       />
@@ -62,19 +53,13 @@ const Consulta = () => {
         <IconButton
           icon="plus-circle"
           iconColor="#FF0000"
-          size={20}
-          onPress={() => console.log('Plus pressed')}
-        />
-        <IconButton
-          icon="minus-circle"
-          iconColor="#0000FF"
-          size={20}
-          onPress={() => console.log('Minus pressed')}
+          size={30}
+          onPress={() => router.push('/create')}  // Alterado para navegar para a tela create
         />
       </View>
       <FlatList
         data={consultas}
-        keyExtractor={(item) => item.crmMedico}
+        keyExtractor={(item) => item.id}  // Corrigido para usar o id correto
         renderItem={({ item }) => (
           <List.Item
             title={item.especializacao}
@@ -83,7 +68,6 @@ const Consulta = () => {
             right={props => (
               <View style={styles.rightContainer}>
                 <Text style={styles.dateText}>{item.novaDataHora.toLocaleDateString("pt-BR")} - {item.novaDataHora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</Text>
-                {/* <Text style={styles.timeText}>{item.horario}</Text> */}
                 <Text style={styles.crmText}>CRM: {item.crmMedico}</Text>
               </View>
             )}
@@ -94,8 +78,6 @@ const Consulta = () => {
     </View>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -156,7 +138,5 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-// Initialize Cloud Firestore and get a reference to the service
 
-
- export default Consulta;
+export default Consulta;
